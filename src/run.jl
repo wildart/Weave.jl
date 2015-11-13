@@ -161,6 +161,10 @@ function eval_chunk(chunk::CodeChunk, report::Report, SandBox::Module)
         chunk.options[:out_width] = report.formatdict[:out_width]
     end
 
+    if chunk.options[:fig] && rcParams[:plotlib] == "PLplot"
+        init_plplot(chunk, report::Report)
+    end
+
     if chunk.options[:term]
         chunk.output = run_term(chunk.content, report, SandBox)
         chunk.options[:term_state] = report.term_state
@@ -170,6 +174,8 @@ function eval_chunk(chunk::CodeChunk, report::Report, SandBox::Module)
 
     if rcParams[:plotlib] == "PyPlot"
         chunk.options[:fig] && (chunk.figures = savefigs_pyplot(chunk, report::Report))
+    elseif rcParams[:plotlib] == "PLplot"
+        chunk.options[:fig] && close_plplot(chunk, report::Report)
     else
         chunk.options[:fig] && (chunk.figures = copy(report.figures))
     end
@@ -221,6 +227,9 @@ function init_plotting(plotlib)
         elseif l_plotlib == "gadfly"
             pluginpath = joinpath(srcpath,"gadfly.jl")
             rcParams[:plotlib] = "Gadfly"
+        elseif l_plotlib == "plplot"
+            pluginpath = joinpath(srcpath,"plplot.jl")
+            rcParams[:plotlib] = "PLplot"
         end
         !isempty(pluginpath) && eval(parse("include(\"$pluginpath\")"))
     end
