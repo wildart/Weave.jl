@@ -1,0 +1,67 @@
+
+
+
+
+
+\begin{juliacode}
+using PLplot
+x = linspace(0, 2π, 200)
+plot(x, sin(x), typ=:line)
+\end{juliacode}
+\begin{figure}[ht]
+\center
+\includegraphics[width=\linewidth]{figures/plplot_formats_sin_fun_1.pdf}
+\caption{sin(x) function.}
+\label{fig:sin_fun}
+\end{figure}
+
+
+
+\begin{figure}[htpb]
+\center
+\includegraphics[width=\linewidth]{figures/plplot_formats_2_1.pdf}
+\caption{cos(x) function.}
+\end{figure}
+
+
+
+\includegraphics[width=\linewidth]{figures/plplot_formats_cos2_fun_1.pdf}
+
+
+
+\begin{juliaterm}
+julia> x = linspace(0, 2π, 200)
+linspace(0.0,6.283185307179586,200)
+
+julia> plot(x, sin(x))
+
+julia> y = 20
+20
+
+julia> plot(x, cos(x))
+
+\end{juliaterm}
+\includegraphics[width=\linewidth]{figures/plplot_formats_4_1.png}
+\includegraphics[width=\linewidth]{figures/plplot_formats_4_2.png}
+
+
+
+\begin{juliaterm}
+julia> x = linspace(0, 2π, 200)
+linspace(0.0,6.283185307179586,200)
+
+julia> plot(x, cos(x))
+
+julia> plot(x, sin(x))
+
+\end{juliaterm}
+\includegraphics[width=\linewidth, height=8cm, page=1]{figures/plplot_formats_5_1.pdf}
+\includegraphics[width=\linewidth, height=8cm, page=2]{figures/plplot_formats_5_1.pdf}
+
+
+
+\begin{juliacode}
+plot(x, sin(x))
+lines(x, cos(x))
+\end{juliacode}
+\includegraphics[width=15cm]{figures/plplot_formats_6_1.pdf}

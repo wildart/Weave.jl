@@ -175,7 +175,7 @@ function eval_chunk(chunk::CodeChunk, report::Report, SandBox::Module)
     if rcParams[:plotlib] == "PyPlot"
         chunk.options[:fig] && (chunk.figures = savefigs_pyplot(chunk, report::Report))
     elseif rcParams[:plotlib] == "PLplot"
-        chunk.options[:fig] && close_plplot(chunk, report::Report)
+        chunk.options[:fig] && (chunk.figures = close_plplot(chunk, report::Report))
     else
         chunk.options[:fig] && (chunk.figures = copy(report.figures))
     end
