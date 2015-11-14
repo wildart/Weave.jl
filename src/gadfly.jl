@@ -35,11 +35,7 @@ function Base.display(report::Report, m::MIME"image/png", p::Plot)
 
     #This is probably not the correct way to handle different formats, but it works.
     if format == ".png"
-        try
-            draw(PNG(full_name, w, h, dpi=dpi), p)
-        catch
-            draw(PNG(full_name, w, h), p) #Compose < 0.3.1, Gadfly < 0.3.1
-        end
+        draw(PNG(full_name, w, h, dpi=dpi), p)
     elseif format == ".pdf"
         draw(PDF(full_name, w, h), p)
     elseif format == ".ps"
