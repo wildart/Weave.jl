@@ -245,6 +245,7 @@ function formatfigures(chunk, docformat::Tex)
     height = chunk.options[:out_height]
     f_pos = chunk.options[:fig_pos]
     f_env = chunk.options[:fig_env]
+    fig_page = get(chunk.options, :fig_page, false)
     result = ""
     figstring = ""
 
@@ -254,16 +255,20 @@ function formatfigures(chunk, docformat::Tex)
         result *= """\\begin{$f_env}[$f_pos]\n"""
     end
 
-
+    pc = 1
     for fig = fignames
         if splitext(fig)[2] == ".tex" #Tikz figures
             figstring *= "\\resizebox{$width}{!}{\\input{$fig}}\n"
         else
-            if height === nothing
-                figstring *= "\\includegraphics[width=$width]{$fig}\n"
-            else
-                figstring *= "\\includegraphics[width=$width, height=$height]{$fig}\n"
+            figstring *= "\\includegraphics[width=$width"
+            if height !== nothing
+                figstring *= ", height=$height"
             end
+            if fig_page
+                figstring *= ", page=$pc"
+                pc += 1
+            end
+            figstring *= "]{$fig}\n"
         end
     end
 
