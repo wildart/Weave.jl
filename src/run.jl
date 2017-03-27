@@ -366,6 +366,9 @@ function init_plotting(plotlib)
         elseif l_plotlib == "gadfly"
             eval(parse("""include("$srcdir/gadfly.jl")"""))
             rcParams[:plotlib] = "Gadfly"
+        elseif l_plotlib == "plplot"
+            eval(parse("""include("$srcdir/plplot.jl")"""))
+            rcParams[:plotlib] = "PLplot"
       end
     end
     return true
@@ -498,4 +501,5 @@ function detect_plotlib(chunk::CodeChunk)
 
   isdefined(:PyPlot) && init_plotting("PyPlot") && return
   isdefined(:Gadfly) && init_plotting("Gadfly") && return
+  isdefined(:PLplot) && init_plotting("PLplot") && return
 end
